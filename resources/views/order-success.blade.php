@@ -20,11 +20,11 @@
         </h1>
 
         <p class="text-gray-500 text-lg mt-4">
-            Pesanan kamu sedang diproses oleh kasir.
+            Pesanan kamu sedang diproses oleh kasir
         </p>
 
         <p class="text-black-500 font-extrabold text-lg mt-4">
-            JANGAN LUPA SCREENSHOT HALAMAN INI !!!
+            Terima kasih sudah datang di hapiyo
         </p>
 
     </div>
@@ -37,7 +37,7 @@
                 Nomor Antrian
             </span>
 
-            <span class="text-4xl font-extrabold text-blue-600">
+            <span class="text-4xl font-extrabold text-black-600">
                 #{{ str_pad($order->id, 3, '0', STR_PAD_LEFT) }}
             </span>
         </div>
@@ -47,7 +47,7 @@
                 Nama Pemesan
             </span>
 
-            <span class="font-bold text-gray-800">
+            <span class="font-extrabold text-black-800">
                 {{ $order->customer_name }}
             </span>
         </div>
@@ -57,7 +57,7 @@
                 Pembayaran
             </span>
 
-            <span class="font-bold text-gray-800">
+            <span class="font-extrabold text-black-800">
                 {{ $order->payment_method }}
             </span>
         </div>
@@ -77,7 +77,7 @@
                 Total
             </span>
 
-            <span class="text-3xl font-extrabold text-green-600">
+            <span class="text-3xl font-extrabold text-black-600">
                 Rp {{ number_format($order->total,0,',','.') }}
             </span>
         </div>
