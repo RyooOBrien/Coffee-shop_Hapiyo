@@ -12,50 +12,49 @@
 
 <body class="bg-[#f8f9fb] min-h-screen">
 
-    
-
     <!-- NAVBAR -->
     <nav class="bg-white/90 backdrop-blur-md border-b sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex justify-between items-center gap-4">
 
             <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-500">
                 Hapiyo Cafe
             </h1>
 
             <a href="/cart"
-               class="bg-gray-900 hover:bg-blue-500 text-white px-4 sm:px-6 py-3 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold transition">
-                 Keranjang
+               class="bg-gray-900 hover:bg-blue-500 text-white px-4 sm:px-6 py-3 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold transition whitespace-nowrap">
+                Keranjang
             </a>
 
         </div>
     </nav>
 
     <!-- HERO -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-16">
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-12 md:py-16">
 
         <div data-aos="fade-up"
-             class="bg-white rounded-[28px] sm:rounded-[40px] p-6 sm:p-10 md:p-16 shadow-sm border grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+             class="bg-white rounded-[26px] sm:rounded-[40px] p-5 sm:p-10 md:p-16 shadow-sm border grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 items-center">
 
             <div data-aos="fade-right" data-aos-delay="150">
-                <p class="text-blue-500 font-bold mb-4">
+                <p class="text-blue-500 font-bold mb-3 sm:mb-4 text-sm sm:text-base">
                     Welcome to Hapiyo
                 </p>
 
-                <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
                     Pilih Menu <br> Favoritmu
                 </h2>
 
-                <p class="text-gray-500 text-base sm:text-lg mt-4 sm:mt-6 leading-relaxed">
+                <p class="text-gray-500 text-sm sm:text-lg mt-4 sm:mt-6 leading-relaxed">
                     Nikmati pilihan kopi, makanan, dan minuman terbaik dari Hapiyo Cafe.
                 </p>
             </div>
 
             <div data-aos="zoom-in" data-aos-delay="300"
-                 class="relative w-full h-52 sm:h-64 md:h-80 overflow-hidden rounded-[24px] sm:rounded-[35px] shadow-xl sm:shadow-2xl">
+                 class="relative w-full h-44 sm:h-64 md:h-80 overflow-hidden rounded-[22px] sm:rounded-[35px] shadow-xl sm:shadow-2xl">
 
                 <img id="slider"
                      src="/images/cafe1.jpg"
-                     class="w-full h-full object-cover transition-all duration-1000">
+                     class="w-full h-full object-cover transition-all duration-1000"
+                     alt="Hapiyo Cafe">
 
                 <div class="absolute inset-0 bg-black/10"></div>
             </div>
@@ -74,12 +73,12 @@
         @endphp
 
         <!-- KOPI -->
-        <div class="mb-16" data-aos="fade-up">
-            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
+        <div class="mb-12 sm:mb-16" data-aos="fade-up">
+            <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-5 sm:mb-8">
                 Menu Kopi Hapiyo
             </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 @forelse($kopi as $product)
                     <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         @include('components.product-card', ['product' => $product])
@@ -91,8 +90,8 @@
         </div>
 
         <!-- MAKANAN -->
-        <div class="mb-16" data-aos="fade-up">
-            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
+        <div class="mb-12 sm:mb-16" data-aos="fade-up">
+            <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-5 sm:mb-8">
                 Menu Makanan Hapiyo
             </h3>
 
@@ -109,7 +108,7 @@
 
         <!-- MINUMAN -->
         <div data-aos="fade-up">
-            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
+            <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-5 sm:mb-8">
                 Menu Non-Coffee Hapiyo
             </h3>
 
@@ -132,12 +131,12 @@
         AOS.init({
             duration: 900,
             once: true,
-            offset: 120
+            offset: 80,
+            disable: function () {
+                return window.innerWidth < 768;
+            }
         });
 
-        
-
-        // SLIDER
         const images = [
             "/images/cafe1.jpg",
             "/images/cafe2.jpg",
