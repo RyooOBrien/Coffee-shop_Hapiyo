@@ -11,18 +11,32 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $data = [
+        $adminData = [
             'name' => 'Admin',
             'password' => Hash::make('admin12345'),
         ];
 
         if (Schema::hasColumn('users', 'role')) {
-            $data['role'] = 'admin';
+            $adminData['role'] = 'admin';
         }
 
         User::updateOrCreate(
             ['email' => 'admin@gmail.com'],
-            $data
+            $adminData
+        );
+
+        $kasirData = [
+            'name' => 'Kasir',
+            'password' => Hash::make('kasir12345'),
+        ];
+
+        if (Schema::hasColumn('users', 'role')) {
+            $kasirData['role'] = 'kasir';
+        }
+
+        User::updateOrCreate(
+            ['email' => 'kasir@gmail.com'],
+            $kasirData
         );
     }
 }
