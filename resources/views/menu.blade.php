@@ -78,13 +78,13 @@
                 Menu Kopi Hapiyo
             </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
                 @forelse($kopi as $product)
                     <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         @include('components.product-card', ['product' => $product])
                     </div>
                 @empty
-                    <p class="text-gray-500">Belum ada menu kopi.</p>
+                    <p class="text-gray-500 col-span-2">Belum ada menu kopi.</p>
                 @endforelse
             </div>
         </div>
@@ -95,13 +95,13 @@
                 Menu Makanan Hapiyo
             </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
                 @forelse($makanan as $product)
                     <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         @include('components.product-card', ['product' => $product])
                     </div>
                 @empty
-                    <p class="text-gray-500">Belum ada menu makanan.</p>
+                    <p class="text-gray-500 col-span-2">Belum ada menu makanan.</p>
                 @endforelse
             </div>
         </div>
@@ -112,13 +112,13 @@
                 Menu Non-Coffee Hapiyo
             </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
                 @forelse($minuman as $product)
                     <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         @include('components.product-card', ['product' => $product])
                     </div>
                 @empty
-                    <p class="text-gray-500">Belum ada menu minuman.</p>
+                    <p class="text-gray-500 col-span-2">Belum ada menu minuman.</p>
                 @endforelse
             </div>
         </div>
