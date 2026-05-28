@@ -16,14 +16,14 @@
 
     <!-- NAVBAR -->
     <nav class="bg-white/90 backdrop-blur-md border-b sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex justify-between items-center">
 
-            <h1 class="text-3xl font-extrabold text-blue-500">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-500">
                 Hapiyo Cafe
             </h1>
 
             <a href="/cart"
-               class="bg-gray-900 hover:bg-blue-500 text-white px-6 py-3 rounded-2xl font-bold transition">
+               class="bg-gray-900 hover:bg-blue-500 text-white px-4 sm:px-6 py-3 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold transition">
                  Keranjang
             </a>
 
@@ -31,27 +31,27 @@
     </nav>
 
     <!-- HERO -->
-    <section class="max-w-7xl mx-auto px-8 py-16">
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 py-8 sm:py-16">
 
         <div data-aos="fade-up"
-             class="bg-white rounded-[40px] p-10 md:p-16 shadow-sm border grid md:grid-cols-2 gap-10 items-center">
+             class="bg-white rounded-[28px] sm:rounded-[40px] p-6 sm:p-10 md:p-16 shadow-sm border grid md:grid-cols-2 gap-8 md:gap-10 items-center">
 
             <div data-aos="fade-right" data-aos-delay="150">
                 <p class="text-blue-500 font-bold mb-4">
                     Welcome to Hapiyo
                 </p>
 
-                <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
                     Pilih Menu <br> Favoritmu
                 </h2>
 
-                <p class="text-gray-500 text-lg mt-6 leading-relaxed">
+                <p class="text-gray-500 text-base sm:text-lg mt-4 sm:mt-6 leading-relaxed">
                     Nikmati pilihan kopi, makanan, dan minuman terbaik dari Hapiyo Cafe.
                 </p>
             </div>
 
             <div data-aos="zoom-in" data-aos-delay="300"
-                 class="relative w-full h-80 overflow-hidden rounded-[35px] shadow-2xl">
+                 class="relative w-full h-52 sm:h-64 md:h-80 overflow-hidden rounded-[24px] sm:rounded-[35px] shadow-xl sm:shadow-2xl">
 
                 <img id="slider"
                      src="/images/cafe1.jpg"
@@ -65,7 +65,7 @@
     </section>
 
     <!-- MENU -->
-    <section class="max-w-7xl mx-auto px-8 pb-24">
+    <section class="max-w-7xl mx-auto px-4 sm:px-8 pb-16 sm:pb-24">
 
         @php
             $kopi = $products->where('category', 'Kopi');
@@ -75,7 +75,7 @@
 
         <!-- KOPI -->
         <div class="mb-16" data-aos="fade-up">
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-8">
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
                 Menu Kopi Hapiyo
             </h3>
 
@@ -92,11 +92,11 @@
 
         <!-- MAKANAN -->
         <div class="mb-16" data-aos="fade-up">
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-8">
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
                 Menu Makanan Hapiyo
             </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 @forelse($makanan as $product)
                     <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         @include('components.product-card', ['product' => $product])
@@ -109,11 +109,11 @@
 
         <!-- MINUMAN -->
         <div data-aos="fade-up">
-            <h3 class="text-4xl font-extrabold text-gray-900 mb-8">
+            <h3 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 sm:mb-8">
                 Menu Non-Coffee Hapiyo
             </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 @forelse($minuman as $product)
                     <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                         @include('components.product-card', ['product' => $product])
