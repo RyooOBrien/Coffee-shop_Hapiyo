@@ -12,6 +12,10 @@ class Order extends Model
         'total',
         'payment_method',
         'status',
+        'closed_at',
+    ];
+    protected $casts = [
+    'closed_at' => 'datetime',
     ];
     public function items()
 {
