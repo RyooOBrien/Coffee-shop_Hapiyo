@@ -116,7 +116,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             'menuTerlaris'
         ));
     });
-    
     Route::get('/admin/laporan/export-excel', function () {
     $data = DB::table('orders')
         ->join('order_items', 'orders.id', '=', 'order_items.order_id')
@@ -190,13 +189,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/product/{id}', [ProductController::class, 'update']);
     Route::delete('/product/{id}', [ProductController::class, 'destroy']);
 
-    Route::get('/admin/orders/{id}/ganti-nama', function ($id) {
-    DB::table('orders')->where('id', $id)->update([
-        'customer_name' => 'Pelanggan'
-    ]);
-
-    return redirect('/admin/laporan');
-});
 });
 
 /*
