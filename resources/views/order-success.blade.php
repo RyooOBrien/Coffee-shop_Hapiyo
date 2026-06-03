@@ -8,76 +8,76 @@
     @vite(['resources/css/app.css'])
 </head>
 
-<body class="bg-[#EFF6FF] min-h-screen flex items-center justify-center p-6">
+<body class="bg-[#EFF6FF] min-h-screen flex items-start sm:items-center justify-center px-4 py-6 sm:p-6">
 
-<div class="max-w-2xl w-full bg-white rounded-[40px] shadow-2xl p-10">
+<div class="w-full max-w-[420px] sm:max-w-2xl bg-white rounded-[28px] sm:rounded-[40px] shadow-2xl px-5 py-7 sm:p-10">
 
     <!-- SUCCESS -->
-    <div class="text-center mb-10">
+    <div class="text-center mb-7 sm:mb-10">
 
-        <h1 class="text-5xl font-extrabold text-gray-900">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
             Order Berhasil
         </h1>
 
-        <p class="text-gray-500 text-lg mt-4">
+        <p class="text-gray-500 text-sm sm:text-lg mt-3 sm:mt-4">
             Pesanan kamu sedang diproses oleh kasir
         </p>
 
-        <p class="text-black-500 font-extrabold text-lg mt-4">
+        <p class="text-gray-900 font-extrabold text-sm sm:text-lg mt-4">
             Terima kasih sudah datang di hapiyo
         </p>
 
     </div>
 
     <!-- INFO -->
-    <div class="bg-blue-50 rounded-3xl p-8 mb-8">
+    <div class="bg-blue-50 rounded-3xl p-5 sm:p-8 mb-7 sm:mb-8">
 
-        <div class="flex justify-between items-center mb-5">
-            <span class="text-gray-500 font-semibold">
+        <div class="flex justify-between items-center gap-4 mb-5">
+            <span class="text-gray-500 font-semibold text-sm sm:text-base">
                 Nomor Antrian
             </span>
 
-            <span class="text-4xl font-extrabold text-black-600">
+            <span class="text-3xl sm:text-4xl font-extrabold text-gray-900 whitespace-nowrap">
                 #{{ str_pad($order->id, 3, '0', STR_PAD_LEFT) }}
             </span>
         </div>
 
-        <div class="flex justify-between items-center mb-4">
-            <span class="text-gray-500">
+        <div class="flex justify-between items-center gap-4 mb-4">
+            <span class="text-gray-500 text-sm sm:text-base">
                 Nama Pemesan
             </span>
 
-            <span class="font-extrabold text-black-800">
+            <span class="font-extrabold text-gray-900 text-sm sm:text-base text-right break-words">
                 {{ $order->customer_name }}
             </span>
         </div>
 
-        <div class="flex justify-between items-center mb-4">
-            <span class="text-gray-500">
+        <div class="flex justify-between items-center gap-4 mb-4">
+            <span class="text-gray-500 text-sm sm:text-base">
                 Pembayaran
             </span>
 
-            <span class="font-extrabold text-black-800">
+            <span class="font-extrabold text-gray-900 text-sm sm:text-base">
                 {{ $order->payment_method }}
             </span>
         </div>
 
-        <div class="flex justify-between items-center mb-4">
-            <span class="text-gray-500">
+        <div class="flex justify-between items-center gap-4 mb-4">
+            <span class="text-gray-500 text-sm sm:text-base">
                 Status
             </span>
 
-            <div id="orderStatus">
+            <div id="orderStatus" class="text-sm sm:text-base">
                 @include('kasir.partials.order-status-live', ['order' => $order])
             </div>
         </div>
 
-        <div class="flex justify-between items-center">
-            <span class="text-gray-500">
+        <div class="flex justify-between items-center gap-4 pt-3 border-t border-blue-100">
+            <span class="text-gray-500 text-sm sm:text-base">
                 Total
             </span>
 
-            <span class="text-3xl font-extrabold text-black-600">
+            <span class="text-2xl sm:text-3xl font-extrabold text-gray-900 whitespace-nowrap">
                 Rp {{ number_format($order->total,0,',','.') }}
             </span>
         </div>
@@ -85,9 +85,9 @@
     </div>
 
     <!-- MENU -->
-    <div class="mb-10">
+    <div class="mb-8 sm:mb-10">
 
-        <h2 class="text-2xl font-extrabold text-gray-800 mb-5">
+        <h2 class="text-xl sm:text-2xl font-extrabold text-gray-800 mb-4 sm:mb-5">
             Detail Pesanan
         </h2>
 
@@ -95,19 +95,19 @@
 
             @foreach($order->items as $item)
 
-            <div class="flex justify-between items-center border-b pb-4">
+            <div class="grid grid-cols-[1fr_auto] gap-4 items-start border-b pb-4">
 
-                <div>
-                    <h3 class="font-bold text-gray-800 text-lg">
+                <div class="min-w-0">
+                    <h3 class="font-extrabold text-gray-800 text-sm sm:text-lg leading-snug break-words">
                         {{ $item->product_name }}
                     </h3>
 
-                    <p class="text-gray-500">
+                    <p class="text-gray-500 text-xs sm:text-base mt-1">
                         {{ $item->quantity }} x Rp {{ number_format($item->price,0,',','.') }}
                     </p>
                 </div>
 
-                <div class="font-extrabold text-gray-800">
+                <div class="font-extrabold text-gray-800 text-sm sm:text-base whitespace-nowrap pt-1">
                     Rp {{ number_format($item->subtotal,0,',','.') }}
                 </div>
 
@@ -120,12 +120,12 @@
     </div>
 
     <!-- BUTTON -->
-    <div class="mt-8">
+    <div class="mt-6 sm:mt-8">
 
         <a href="/menu"
            class="w-full block bg-blue-600 hover:bg-blue-700 
            text-white py-4 rounded-2xl text-center 
-           font-bold text-lg">
+           font-bold text-base sm:text-lg">
             Pesan Lagi
         </a>
 
