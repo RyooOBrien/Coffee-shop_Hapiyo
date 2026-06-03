@@ -43,15 +43,22 @@
         </div>
 
         <div class="flex gap-4 no-print">
+
+            <a href="{{ route('admin.laporan.export-excel') }}"
+            class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold">
+                Export Excel
+            </a>
+
             <button onclick="window.print()"
                 class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-2xl font-bold">
                 Cetak Laporan
             </button>
 
             <a href="/admin"
-               class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-2xl font-bold">
+            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-2xl font-bold">
                 Kembali Dashboard
             </a>
+
         </div>
 
     </div>

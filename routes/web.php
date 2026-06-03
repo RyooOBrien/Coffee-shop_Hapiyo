@@ -116,6 +116,72 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             'menuTerlaris'
         ));
     });
+    
+    Route::get('/admin/laporan/export-excel', function () {
+    $data = DB::table('orders')
+        ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+        ->select(
+            'orders.id',
+            'orders.customer_name',
+            'orders.payment_method',
+            'orders.status',
+            'orders.total',
+            'orders.created_at',
+            'order_items.product_name',
+            'order_items.quantity',
+            'order_items.price',
+            'order_items.subtotal'
+        )
+        ->where('orders.status', 'Selesai')
+        ->orderBy('orders.created_at', 'desc')
+        ->get();
+
+    $filename = 'laporan-cafe-' . date('Y-m-d-His') . '.csv';
+
+    $headers = [
+        'Content-Type' => 'text/csv; charset=UTF-8',
+        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+    ];
+
+    return response()->stream(function () use ($data) {
+        $file = fopen('php://output', 'w');
+
+        // Supaya Excel aman baca simbol Rp
+        fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+        fputcsv($file, [
+            'Tanggal',
+            'Bulan',
+            'No Order',
+            'Nama Pemesan',
+            'Menu',
+            'Qty',
+            'Harga Satuan',
+            'Subtotal',
+            'Total Order',
+            'Pembayaran',
+            'Status',
+        ], ';');
+
+        foreach ($data as $row) {
+            fputcsv($file, [
+                \Carbon\Carbon::parse($row->created_at)->format('d-m-Y'),
+                \Carbon\Carbon::parse($row->created_at)->translatedFormat('F Y'),
+                '#' . str_pad($row->id, 3, '0', STR_PAD_LEFT),
+                $row->customer_name,
+                $row->product_name,
+                $row->quantity,
+                'Rp ' . number_format($row->price, 0, ',', '.'),
+                'Rp ' . number_format($row->subtotal, 0, ',', '.'),
+                'Rp ' . number_format($row->total, 0, ',', '.'),
+                $row->payment_method,
+                $row->status,
+            ], ';');
+        }
+
+        fclose($file);
+    }, 200, $headers);
+})->name('admin.laporan.export-excel');
 
     Route::get('/product', [ProductController::class, 'index']);
     Route::get('/product/create', [ProductController::class, 'create']);
