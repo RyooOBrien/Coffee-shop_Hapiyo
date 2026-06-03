@@ -9,7 +9,7 @@
 </head>
 
 <body class="min-h-screen bg-cover bg-center relative"
-style="background-image: url('{{ asset('images/bg-cafe.jpg') }}');"></body>
+style="background-image: url('{{ asset('images/bg-cafe1.jpg') }}');"></body>
 
     <!-- OVERLAY -->
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
