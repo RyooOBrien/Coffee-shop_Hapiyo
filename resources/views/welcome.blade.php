@@ -9,10 +9,10 @@
 </head>
 
 <body class="min-h-screen bg-cover bg-center relative"
-style="background-image: url('{{ asset('images/bg-cafe1.jpg') }}');"></body>
+style="background-image: url('{{ asset('images/cafe1.jpg') }}');">
 
     <!-- OVERLAY -->
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 bg-black/30"></div>
 
     <!-- CONTENT -->
     <div class="relative z-10 min-h-screen flex items-center justify-center px-6">
