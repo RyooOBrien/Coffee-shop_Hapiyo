@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
-Route::get('/', function () {
-    return view('menu');
-});
+Route::get('/', [ProductController::class, 'menu']);
 
 Route::get('/dashboard', function () {
     if (auth()->user()->role == 'admin') {
