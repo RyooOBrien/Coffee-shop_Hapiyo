@@ -7,12 +7,16 @@ use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('menu');
 });
 
 Route::get('/dashboard', function () {
     if (auth()->user()->role == 'admin') {
         return redirect('/admin');
+    }
+
+    if (auth()->user()->role == 'kasir') {
+        return redirect('/kasir/orders');
     }
 
     return redirect('/menu');
