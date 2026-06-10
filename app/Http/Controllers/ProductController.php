@@ -42,12 +42,23 @@ public function admin()
         'dataGrafik'
     ));
 }
-public function index()
+public function index(Request $request)
 {
-$products = Product::all();
+    $search = $request->search;
 
-return view('product.index', compact('products'));
-}    
+    $products = Product::query()
+        ->when($search, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('category', 'like', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(5)
+        ->withQueryString();
+
+    return view('product.index', compact('products', 'search'));
+}
 public function create()
 {
  return view('product.create');

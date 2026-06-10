@@ -8,6 +8,17 @@
     @vite(['resources/css/app.css'])
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </head>
 
 <body class="bg-[#f8f9fb] min-h-screen">
@@ -72,55 +83,275 @@
             $minuman = $products->where('category', 'Minuman');
         @endphp
 
-        <!-- KOPI -->
-        <div class="mb-12 sm:mb-16" data-aos="fade-up">
-            <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-5 sm:mb-8">
-                Menu Kopi Hapiyo
-            </h3>
+        <!-- PILIH KATEGORI -->
+        <div class="mb-6 flex gap-3 overflow-x-auto no-scrollbar pb-2">
+            <a href="#kopi"
+               class="px-6 py-3 rounded-2xl bg-blue-500 text-white font-bold whitespace-nowrap shadow">
+                Kopi
+            </a>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-                @forelse($kopi as $product)
-                    <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                        @include('components.product-card', ['product' => $product])
-                    </div>
-                @empty
-                    <p class="text-gray-500 col-span-2">Belum ada menu kopi.</p>
-                @endforelse
+            <a href="#makanan"
+               class="px-6 py-3 rounded-2xl bg-white text-gray-700 font-bold whitespace-nowrap border hover:bg-blue-50 hover:text-blue-500 transition">
+                Makanan
+            </a>
+
+            <a href="#minuman"
+               class="px-6 py-3 rounded-2xl bg-white text-gray-700 font-bold whitespace-nowrap border hover:bg-blue-50 hover:text-blue-500 transition">
+                Non-Coffee
+            </a>
+        </div>
+
+        <!-- SEARCH MENU -->
+        <div class="mb-10 bg-white rounded-3xl border shadow-sm p-4">
+            <div class="flex flex-col sm:flex-row gap-3">
+
+                <input
+                    type="text"
+                    id="searchMenuInput"
+                    placeholder="Cari menu favoritmu..."
+                    autocomplete="off"
+                    class="w-full px-5 py-4 rounded-2xl border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-semibold"
+                >
+
+                <button
+                    type="button"
+                    id="resetSearchMenu"
+                    class="px-6 py-4 rounded-2xl bg-gray-900 hover:bg-blue-500 text-white font-bold transition">
+                    Hapus
+                </button>
+
+            </div>
+        </div>
+
+        <!-- KOPI -->
+        <div id="kopi" class="product-section mb-12 sm:mb-16 scroll-mt-28" data-aos="fade-up">
+
+            <div class="mb-5 sm:mb-8">
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900">
+                    Menu Kopi Hapiyo
+                </h3>
+            </div>
+
+            <div class="relative">
+
+                <!-- PANAH KIRI -->
+                <button type="button" onclick="scrollMenu('kopiSlider', -380)"
+                    class="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-30
+                    w-14 h-14 items-center justify-center rounded-full
+                    bg-white/90 backdrop-blur-md border border-white/70
+                    shadow-[0_10px_30px_rgba(15,23,42,0.18)]
+                    text-gray-900 hover:bg-blue-500 hover:text-white
+                    hover:scale-105 active:scale-95 transition-all duration-300">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2.8"
+                         stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+
+                <!-- SLIDER MENU -->
+                <div id="kopiSlider"
+                     class="flex gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 px-2">
+
+                    @forelse($kopi as $product)
+                        <div class="product-item min-w-[220px] sm:min-w-[280px] md:min-w-[310px] lg:min-w-[330px] snap-start"
+                             data-name="{{ strtolower($product->name ?? '') }}"
+                             data-category="{{ strtolower($product->category ?? '') }}"
+                             data-description="{{ strtolower($product->description ?? '') }}"
+                             data-aos="fade-up"
+                             data-aos-delay="{{ $loop->index * 100 }}">
+                            @include('components.product-card', ['product' => $product])
+                        </div>
+                    @empty
+                        <p class="text-gray-500">Belum ada menu kopi.</p>
+                    @endforelse
+
+                </div>
+
+                <!-- PANAH KANAN -->
+                <button type="button" onclick="scrollMenu('kopiSlider', 380)"
+                    class="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-30
+                    w-14 h-14 items-center justify-center rounded-full
+                    bg-white/90 backdrop-blur-md border border-white/70
+                    shadow-[0_10px_30px_rgba(15,23,42,0.18)]
+                    text-gray-900 hover:bg-blue-500 hover:text-white
+                    hover:scale-105 active:scale-95 transition-all duration-300">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2.8"
+                         stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+
             </div>
         </div>
 
         <!-- MAKANAN -->
-        <div class="mb-12 sm:mb-16" data-aos="fade-up">
-            <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-5 sm:mb-8">
-                Menu Makanan Hapiyo
-            </h3>
+        <div id="makanan" class="product-section mb-12 sm:mb-16 scroll-mt-28" data-aos="fade-up">
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-                @forelse($makanan as $product)
-                    <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                        @include('components.product-card', ['product' => $product])
-                    </div>
-                @empty
-                    <p class="text-gray-500 col-span-2">Belum ada menu makanan.</p>
-                @endforelse
+            <div class="mb-5 sm:mb-8">
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900">
+                    Menu Makanan Hapiyo
+                </h3>
+            </div>
+
+            <div class="relative">
+
+                <!-- PANAH KIRI -->
+                <button type="button" onclick="scrollMenu('makananSlider', -380)"
+                    class="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-30
+                    w-14 h-14 items-center justify-center rounded-full
+                    bg-white/90 backdrop-blur-md border border-white/70
+                    shadow-[0_10px_30px_rgba(15,23,42,0.18)]
+                    text-gray-900 hover:bg-blue-500 hover:text-white
+                    hover:scale-105 active:scale-95 transition-all duration-300">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2.8"
+                         stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+
+                <!-- SLIDER MENU -->
+                <div id="makananSlider"
+                     class="flex gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 px-2">
+
+                    @forelse($makanan as $product)
+                        <div class="product-item min-w-[220px] sm:min-w-[280px] md:min-w-[310px] lg:min-w-[330px] snap-start"
+                             data-name="{{ strtolower($product->name ?? '') }}"
+                             data-category="{{ strtolower($product->category ?? '') }}"
+                             data-description="{{ strtolower($product->description ?? '') }}"
+                             data-aos="fade-up"
+                             data-aos-delay="{{ $loop->index * 100 }}">
+                            @include('components.product-card', ['product' => $product])
+                        </div>
+                    @empty
+                        <p class="text-gray-500">Belum ada menu makanan.</p>
+                    @endforelse
+
+                </div>
+
+                <!-- PANAH KANAN -->
+                <button type="button" onclick="scrollMenu('makananSlider', 380)"
+                    class="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-30
+                    w-14 h-14 items-center justify-center rounded-full
+                    bg-white/90 backdrop-blur-md border border-white/70
+                    shadow-[0_10px_30px_rgba(15,23,42,0.18)]
+                    text-gray-900 hover:bg-blue-500 hover:text-white
+                    hover:scale-105 active:scale-95 transition-all duration-300">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2.8"
+                         stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+
             </div>
         </div>
 
         <!-- MINUMAN -->
-        <div data-aos="fade-up">
-            <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-5 sm:mb-8">
-                Menu Non-Coffee Hapiyo
-            </h3>
+        <div id="minuman" class="product-section mb-12 sm:mb-16 scroll-mt-28" data-aos="fade-up">
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-8">
-                @forelse($minuman as $product)
-                    <div data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                        @include('components.product-card', ['product' => $product])
-                    </div>
-                @empty
-                    <p class="text-gray-500 col-span-2">Belum ada menu minuman.</p>
-                @endforelse
+            <div class="mb-5 sm:mb-8">
+                <h3 class="text-2xl sm:text-4xl font-extrabold text-gray-900">
+                    Menu Non-Coffee Hapiyo
+                </h3>
             </div>
+
+            <div class="relative">
+
+                <!-- PANAH KIRI -->
+                <button type="button" onclick="scrollMenu('minumanSlider', -380)"
+                    class="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 z-30
+                    w-14 h-14 items-center justify-center rounded-full
+                    bg-white/90 backdrop-blur-md border border-white/70
+                    shadow-[0_10px_30px_rgba(15,23,42,0.18)]
+                    text-gray-900 hover:bg-blue-500 hover:text-white
+                    hover:scale-105 active:scale-95 transition-all duration-300">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2.8"
+                         stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+
+                <!-- SLIDER MENU -->
+                <div id="minumanSlider"
+                     class="flex gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 px-2">
+
+                    @forelse($minuman as $product)
+                        <div class="product-item min-w-[220px] sm:min-w-[280px] md:min-w-[310px] lg:min-w-[330px] snap-start"
+                             data-name="{{ strtolower($product->name ?? '') }}"
+                             data-category="{{ strtolower($product->category ?? '') }}"
+                             data-description="{{ strtolower($product->description ?? '') }}"
+                             data-aos="fade-up"
+                             data-aos-delay="{{ $loop->index * 100 }}">
+                            @include('components.product-card', ['product' => $product])
+                        </div>
+                    @empty
+                        <p class="text-gray-500">Belum ada menu minuman.</p>
+                    @endforelse
+
+                </div>
+
+                <!-- PANAH KANAN -->
+                <button type="button" onclick="scrollMenu('minumanSlider', 380)"
+                    class="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 z-30
+                    w-14 h-14 items-center justify-center rounded-full
+                    bg-white/90 backdrop-blur-md border border-white/70
+                    shadow-[0_10px_30px_rgba(15,23,42,0.18)]
+                    text-gray-900 hover:bg-blue-500 hover:text-white
+                    hover:scale-105 active:scale-95 transition-all duration-300">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2.8"
+                         stroke="currentColor"
+                         class="w-6 h-6">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- MENU TIDAK DITEMUKAN -->
+        <div id="menuNotFound"
+             class="hidden bg-white rounded-3xl border p-10 text-center text-gray-500 font-bold">
+            Menu tidak ditemukan.
         </div>
 
     </section>
@@ -162,6 +393,73 @@
             }, 300);
 
         }, 3500);
+
+        function scrollMenu(sliderId, amount) {
+            const menuSlider = document.getElementById(sliderId);
+
+            if (!menuSlider) return;
+
+            menuSlider.scrollBy({
+                left: amount,
+                behavior: 'smooth'
+            });
+        }
+
+        const searchMenuInput = document.getElementById('searchMenuInput');
+        const resetSearchMenu = document.getElementById('resetSearchMenu');
+        const menuItems = document.querySelectorAll('.product-item');
+        const productSections = document.querySelectorAll('.product-section');
+        const menuNotFound = document.getElementById('menuNotFound');
+
+        searchMenuInput.addEventListener('input', function () {
+            const keyword = this.value.toLowerCase().trim();
+            let totalFound = 0;
+
+            menuItems.forEach(function (item) {
+                const name = item.dataset.name || '';
+                const category = item.dataset.category || '';
+                const description = item.dataset.description || '';
+
+                const isMatch = name.includes(keyword);
+
+                if (keyword === '' || isMatch) {
+                    item.classList.remove('hidden');
+                    totalFound++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+
+            productSections.forEach(function (section) {
+                const visibleItems = section.querySelectorAll('.product-item:not(.hidden)');
+
+                if (keyword !== '' && visibleItems.length === 0) {
+                    section.classList.add('hidden');
+                } else {
+                    section.classList.remove('hidden');
+                }
+            });
+
+            if (keyword !== '' && totalFound === 0) {
+                menuNotFound.classList.remove('hidden');
+            } else {
+                menuNotFound.classList.add('hidden');
+            }
+        });
+
+        resetSearchMenu.addEventListener('click', function () {
+            searchMenuInput.value = '';
+
+            menuItems.forEach(function (item) {
+                item.classList.remove('hidden');
+            });
+
+            productSections.forEach(function (section) {
+                section.classList.remove('hidden');
+            });
+
+            menuNotFound.classList.add('hidden');
+        });
     </script>
 
 </body>

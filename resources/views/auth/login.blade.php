@@ -8,9 +8,9 @@
 </head>
 
 <body class="min-h-screen bg-cover bg-center relative"
-style="background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1974&auto=format&fit=crop');">
+style="background-image: url('{{ asset('images/cafe1.jpg') }}');">
 
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
 
     <div class="relative z-10 min-h-screen flex items-center justify-center px-6">
 

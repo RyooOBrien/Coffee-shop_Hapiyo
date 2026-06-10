@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/', [ProductController::class, 'menu']);
@@ -88,36 +89,105 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 
     Route::get('/admin/orders', function () {
-        $orders = Order::with('items')
-            ->latest()
-            ->get();
+    $orders = Order::with('items')
+        ->latest()
+        ->paginate(5);
 
-        return view('admin-orders', compact('orders'));
-    });
+    return view('admin-orders', compact('orders'));
+});
 
     Route::get('/admin/laporan', function () {
-        $orders = Order::with('items')
-            ->where('status', 'Selesai')
-            ->latest()
-            ->get();
 
-        $totalPendapatan = $orders->sum('total');
-        $totalOrders = $orders->count();
+    // Pagination berdasarkan tanggal, 1 halaman = 1 tanggal
+    $tanggalLaporan = Order::where('status', 'Selesai')
+        ->selectRaw('DATE(created_at) as tanggal')
+        ->groupBy('tanggal')
+        ->orderByDesc('tanggal')
+        ->paginate(1)
+        ->withQueryString();
 
-        $menuTerlaris = DB::table('order_items')
-            ->select('product_name', DB::raw('SUM(quantity) as total_qty'))
-            ->groupBy('product_name')
-            ->orderByDesc('total_qty')
-            ->take(5)
-            ->get();
+    $selectedDate = optional($tanggalLaporan->first())->tanggal;
 
-        return view('laporan', compact(
-            'orders',
-            'totalPendapatan',
-            'totalOrders',
-            'menuTerlaris'
-        ));
-    });
+    // Ambil semua order pada tanggal yang sedang dibuka
+    $orders = Order::with('items')
+        ->where('status', 'Selesai')
+        ->when($selectedDate, function ($query) use ($selectedDate) {
+            $query->whereDate('created_at', $selectedDate);
+        })
+        ->latest()
+        ->get();
+
+    // Statistik khusus tanggal yang sedang dibuka
+    $totalOrders = Order::where('status', 'Selesai')
+        ->when($selectedDate, function ($query) use ($selectedDate) {
+            $query->whereDate('created_at', $selectedDate);
+        })
+        ->count();
+
+    $totalPendapatan = Order::where('status', 'Selesai')
+        ->when($selectedDate, function ($query) use ($selectedDate) {
+            $query->whereDate('created_at', $selectedDate);
+        })
+        ->sum('total');
+
+    $menuTerlaris = OrderItem::select(
+            'order_items.product_name',
+            DB::raw('SUM(order_items.quantity) as total_qty')
+        )
+        ->join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->where('orders.status', 'Selesai')
+        ->when($selectedDate, function ($query) use ($selectedDate) {
+            $query->whereDate('orders.created_at', $selectedDate);
+        })
+        ->groupBy('order_items.product_name')
+        ->orderByDesc('total_qty')
+        ->take(5)
+        ->get();
+
+    return view('laporan', compact(
+        'orders',
+        'tanggalLaporan',
+        'selectedDate',
+        'totalOrders',
+        'totalPendapatan',
+        'menuTerlaris'
+    ));
+})->name('admin.laporan');
+
+    Route::get('/admin/laporan/print-all', function () {
+
+    $ordersByDate = Order::with('items')
+        ->where('status', 'Selesai')
+        ->latest()
+        ->get()
+        ->groupBy(function ($order) {
+            return $order->created_at->format('Y-m-d');
+        });
+
+    $totalOrders = Order::where('status', 'Selesai')->count();
+
+    $totalPendapatan = Order::where('status', 'Selesai')->sum('total');
+
+    $menuTerlaris = OrderItem::select(
+            'order_items.product_name',
+            DB::raw('SUM(order_items.quantity) as total_qty')
+        )
+        ->join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->where('orders.status', 'Selesai')
+        ->groupBy('order_items.product_name')
+        ->orderByDesc('total_qty')
+        ->take(5)
+        ->get();
+
+    return view('laporan-print-all', compact(
+        'ordersByDate',
+        'totalOrders',
+        'totalPendapatan',
+        'menuTerlaris'
+    ));
+
+})->name('admin.laporan.print-all');
+
     Route::get('/admin/laporan/export-excel', function () {
     $data = DB::table('orders')
         ->join('order_items', 'orders.id', '=', 'order_items.order_id')
