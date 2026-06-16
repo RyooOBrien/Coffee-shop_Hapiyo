@@ -157,10 +157,10 @@
 
                 <!-- SLIDER MENU -->
                 <div id="kopiSlider"
-                     class="flex gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 px-2">
+                     class="grid grid-flow-col auto-cols-[48%] sm:auto-cols-[240px] md:auto-cols-[260px] lg:auto-cols-[280px] gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 px-2">
 
                     @forelse($kopi as $product)
-                        <div class="product-item min-w-[220px] sm:min-w-[280px] md:min-w-[310px] lg:min-w-[330px] snap-start"
+                        <div class="product-item snap-start"
                              data-name="{{ strtolower($product->name ?? '') }}"
                              data-category="{{ strtolower($product->category ?? '') }}"
                              data-description="{{ strtolower($product->description ?? '') }}"
@@ -235,7 +235,7 @@
                      class="flex gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 px-2">
 
                     @forelse($makanan as $product)
-                        <div class="product-item min-w-[220px] sm:min-w-[280px] md:min-w-[310px] lg:min-w-[330px] snap-start"
+                        <div class="product-item min-w-[200px] sm:min-w-[240px] md:min-w-[260px] lg:min-w-[280px] snap-start"
                              data-name="{{ strtolower($product->name ?? '') }}"
                              data-category="{{ strtolower($product->category ?? '') }}"
                              data-description="{{ strtolower($product->description ?? '') }}"
@@ -310,7 +310,7 @@
                      class="flex gap-4 sm:gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-5 px-2">
 
                     @forelse($minuman as $product)
-                        <div class="product-item min-w-[220px] sm:min-w-[280px] md:min-w-[310px] lg:min-w-[330px] snap-start"
+                        <div class="product-item min-w-[200px] sm:min-w-[240px] md:min-w-[260px] lg:min-w-[280px] snap-start"
                              data-name="{{ strtolower($product->name ?? '') }}"
                              data-category="{{ strtolower($product->category ?? '') }}"
                              data-description="{{ strtolower($product->description ?? '') }}"
